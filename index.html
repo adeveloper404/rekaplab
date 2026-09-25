@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LabTrack - Sistem Pendataan Komputer Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Google Plus Jakarta Sans & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark">
+  <div class="app-shell">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div>
+          <h1 class="brand-title">LabTrack</h1>
+          <p class="brand-subtitle">Audit & Inventaris Unit PC</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="icon-btn" aria-label="Ganti Tema">
+          <i id="themeIcon" class="fa-solid fa-sun"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigasi Tab Segmented -->
+    <nav class="nav-tabs">
+      <button class="tab-button active" data-tab="tab-audit">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Audit PC</span>
+      </button>
+      <button class="tab-button" data-tab="tab-rekap">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Rekap Data</span>
+      </button>
+      <button class="tab-button" data-tab="tab-cetak">
+        <i class="fa-solid fa-print"></i>
+        <span>Laporan</span>
+      </button>
+    </nav>
+
+    <!-- Konten Utama -->
+    <main class="content-area">
+
+      <!-- ================= TAB 1: FORM PENDATAAN ================= -->
+      <section id="tab-audit" class="tab-pane active">
+        <form id="auditForm" autocomplete="off">
+          
+          <!-- Identitas Komputer & Lab -->
+          <div class="glass-card">
+            <div class="card-header">
+              <i class="fa-solid fa-desktop accent-icon"></i>
+              <h3>Identitas Perangkat & Lab</h3>
+            </div>
+            
+            <div class="grid-2">
+              <div class="field-group">
+                <label for="labSelect">Lokasi Laboratorium</label>
+                <select id="labSelect" required>
+                  <option value="">Pilih Lab...</option>
+                  <option value="Lab Komputer 1 (Software)">Lab Komputer 1 (Software)</option>
+                  <option value="Lab Komputer 2 (Jaringan)">Lab Komputer 2 (Jaringan)</option>
+                  <option value="Lab Komputer 3 (Multimedia)">Lab Komputer 3 (Multimedia)</option>
+                  <option value="Lab Riset / Server">Lab Riset / Server</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="pcCode">ID / Nomor PC</label>
+                <input type="text" id="pcCode" placeholder="Misal: PC-LAB1-01" required>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field-group">
+                <label for="inspector">Nama Teknisi / Pemeriksa</label>
+                <input type="text" id="inspector" placeholder="Nama lengkap petugas" required>
+              </div>
+              <div class="field-group">
+                <label for="auditDate">Tanggal & Waktu</label>
+                <input type="datetime-local" id="auditDate" required>
+              </div>
+            </div>
+
+            <!-- Spesifikasi Dasar -->
+            <div class="grid-3">
+              <div class="field-group">
+                <label for="cpuSpec">Processor / CPU</label>
+                <input type="text" id="cpuSpec" placeholder="Intel i5-10400 / Ryzen 5" required>
+              </div>
+              <div class="field-group">
+                <label for="ramSpec">RAM Terpasang</label>
+                <select id="ramSpec" required>
+                  <option value="4 GB">4 GB</option>
+                  <option value="8 GB" selected>8 GB</option>
+                  <option value="16 GB">16 GB</option>
+                  <option value="32 GB">32 GB</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="storageSpec">Kapasitas Storage</label>
+                <input type="text" id="storageSpec" placeholder="SSD 256GB / HDD 1TB" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kategori Checklist: Hardware Utama -->
+          <div class="glass-card">
+            <div class="card-header">
+              <i class="fa-solid fa-server accent-icon"></i>
+              <h3>Hardware Utama & Komponen CPU</h3>
+            </div>
+            <div id="group-hardware" class="checklist-list"></div>
+          </div>
+
+          <!-- Kategori Checklist: Peripheral & Layar -->
+          <div class="glass-card">
+            <div class="card-header">
+              <i class="fa-solid fa-keyboard accent-icon"></i>
+              <h3>Layar Monitor & Periferal</h3>
+            </div>
+            <div id="group-peripheral" class="checklist-list"></div>
+          </div>
+
+          <!-- Kategori Checklist: Jaringan & Software -->
+          <div class="glass-card">
+            <div class="card-header">
+              <i class="fa-solid fa-network-wired accent-icon"></i>
+              <h3>Jaringan & Sistem Operasi</h3>
+            </div>
+            <div id="group-software" class="checklist-list"></div>
+          </div>
+
+          <!-- Upload Dokumentasi Foto Kondisi PC -->
+          <div class="glass-card">
+            <div class="card-header">
+              <i class="fa-solid fa-camera accent-icon"></i>
+              <h3>Dokumentasi Foto Fisik PC</h3>
+            </div>
+            <div class="upload-zone" id="uploadDropArea">
+              <input type="file" id="photoInput" accept="image/*" capture="environment">
+              <div class="upload-placeholder" id="uploadPlaceholder">
+                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                <p>Klik untuk buka kamera atau pilih foto</p>
+                <span class="file-note">Maks. 2MB (Otomatis dikompres)</span>
+              </div>
+              <div class="image-preview-wrapper hidden" id="previewWrapper">
+                <img id="imagePreview" alt="Foto Unit">
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="btnSaveAudit" class="btn-primary-action">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Simpan Data Audit</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ================= TAB 2: REKAP & MONITORING ================= -->
+      <section id="tab-rekap" class="tab-pane">
+        <!-- Dashboard Mini Metrik -->
+        <div class="metric-row">
+          <div class="metric-card">
+            <span class="metric-label">Total PC</span>
+            <span class="metric-val" id="metricTotal">0</span>
+          </div>
+          <div class="metric-card safe">
+            <span class="metric-label">Normal</span>
+            <span class="metric-val" id="metricNormal">0</span>
+          </div>
+          <div class="metric-card danger">
+            <span class="metric-label">Trouble</span>
+            <span class="metric-val" id="metricIssue">0</span>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="glass-card toolbar-card">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchKeyword" placeholder="Cari Kode PC, Lab, atau Teknisi...">
+          </div>
+          <div class="filter-row">
+            <select id="filterLab">
+              <option value="ALL">Semua Laboratorium</option>
+              <option value="Lab Komputer 1 (Software)">Lab 1</option>
+              <option value="Lab Komputer 2 (Jaringan)">Lab 2</option>
+              <option value="Lab Komputer 3 (Multimedia)">Lab 3</option>
+              <option value="Lab Riset / Server">Lab Riset</option>
+            </select>
+            <select id="filterStatus">
+              <option value="ALL">Semua Status</option>
+              <option value="Normal">Normal</option>
+              <option value="Kendala / Perlu Servis">Perlu Servis</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Daftar PC Terdaftar -->
+        <div id="pcListContainer" class="pc-list"></div>
+      </section>
+
+      <!-- ================= TAB 3: CETAK LAPORAN ================= -->
+      <section id="tab-cetak" class="tab-pane">
+        <div class="glass-card">
+          <div class="card-header">
+            <i class="fa-solid fa-file-invoice accent-icon"></i>
+            <h3>Cetak Berita Acara Pemeriksaan</h3>
+          </div>
+          <p class="desc-text">Cetak format Berita Acara Kondisi Komputer resmi untuk arsip laboratorium atau pengajuan perbaikan teknis.</p>
+          
+          <div class="field-group mt-3">
+            <label for="selectPcForPrint">Pilih Unit Komputer Terdata:</label>
+            <select id="selectPcForPrint"></select>
+          </div>
+
+          <button type="button" id="btnPrintAction" class="btn-primary-action mt-3">
+            <i class="fa-solid fa-print"></i>
+            <span>Cetak / Simpan PDF</span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Modal Detail Perangkat -->
+    <div id="detailModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-top">
+          <h3 id="modalPcTitle">Detail Komputer</h3>
+          <button class="modal-close" id="btnCloseModal">&times;</button>
+        </div>
+        <div class="modal-scroll-body" id="modalDetailBody"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Format Lembar Cetak Berita Acara (Muncul Hanya Saat Dicetak) -->
+  <div id="printSheet" class="print-document"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
