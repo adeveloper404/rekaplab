@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LabTrack - Sistem Pendataan Komputer Lab</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Font Google Plus Jakarta Sans & Icons -->
+  <!-- Font Google Plus Jakarta Sans & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark">
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
   <div class="app-shell">
     
     <!-- Top Header -->
@@ -20,9 +23,10 @@
         <div class="brand-logo">
           <i class="fa-solid fa-microchip"></i>
         </div>
-        <div>
+        <div class="brand-text">
+          <div class="brand-badge"><i class="fa-solid fa-shield-halved"></i> Audit System v2.0</div>
           <h1 class="brand-title">LabTrack</h1>
-          <p class="brand-subtitle">Audit & Inventaris Unit PC</p>
+          <p class="brand-subtitle">Audit & Inventaris Unit PC Laboratorium</p>
         </div>
       </div>
       <div class="header-actions">
@@ -33,16 +37,16 @@
     </header>
 
     <!-- Navigasi Tab Segmented -->
-    <nav class="nav-tabs">
-      <button class="tab-button active" data-tab="tab-audit">
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-button active" data-tab="tab-audit" role="tab">
         <i class="fa-solid fa-clipboard-check"></i>
         <span>Audit PC</span>
       </button>
-      <button class="tab-button" data-tab="tab-rekap">
+      <button class="tab-button" data-tab="tab-rekap" role="tab">
         <i class="fa-solid fa-layer-group"></i>
         <span>Rekap Data</span>
       </button>
-      <button class="tab-button" data-tab="tab-cetak">
+      <button class="tab-button" data-tab="tab-cetak" role="tab">
         <i class="fa-solid fa-print"></i>
         <span>Laporan</span>
       </button>
@@ -58,13 +62,16 @@
           <!-- Identitas Komputer & Lab -->
           <div class="glass-card">
             <div class="card-header">
-              <i class="fa-solid fa-desktop accent-icon"></i>
-              <h3>Identitas Perangkat & Lab</h3>
+              <span class="icon-wrap"><i class="fa-solid fa-desktop accent-icon"></i></span>
+              <div>
+                <h3>Identitas Perangkat & Lab</h3>
+                <p class="card-subtitle">Tentukan lokasi, spesifikasi teknis, dan identitas unit</p>
+              </div>
             </div>
             
             <div class="grid-2">
               <div class="field-group">
-                <label for="labSelect">Lokasi Laboratorium</label>
+                <label for="labSelect"><i class="fa-solid fa-location-dot"></i> Lokasi Laboratorium</label>
                 <select id="labSelect" required>
                   <option value="">Pilih Lab...</option>
                   <option value="Lab Komputer 1 (Software)">Lab Komputer 1 (Software)</option>
@@ -74,18 +81,18 @@
                 </select>
               </div>
               <div class="field-group">
-                <label for="pcCode">ID / Nomor PC</label>
+                <label for="pcCode"><i class="fa-solid fa-barcode"></i> ID / Nomor PC</label>
                 <input type="text" id="pcCode" placeholder="Misal: PC-LAB1-01" required>
               </div>
             </div>
 
             <div class="grid-2">
               <div class="field-group">
-                <label for="inspector">Nama Teknisi / Pemeriksa</label>
+                <label for="inspector"><i class="fa-solid fa-user-gear"></i> Teknisi / Pemeriksa</label>
                 <input type="text" id="inspector" placeholder="Nama lengkap petugas" required>
               </div>
               <div class="field-group">
-                <label for="auditDate">Tanggal & Waktu</label>
+                <label for="auditDate"><i class="fa-regular fa-calendar-days"></i> Tanggal & Waktu Audit</label>
                 <input type="datetime-local" id="auditDate" required>
               </div>
             </div>
@@ -93,11 +100,11 @@
             <!-- Spesifikasi Dasar -->
             <div class="grid-3">
               <div class="field-group">
-                <label for="cpuSpec">Processor / CPU</label>
+                <label for="cpuSpec"><i class="fa-solid fa-microchip"></i> Processor / CPU</label>
                 <input type="text" id="cpuSpec" placeholder="Intel i5-10400 / Ryzen 5" required>
               </div>
               <div class="field-group">
-                <label for="ramSpec">RAM Terpasang</label>
+                <label for="ramSpec"><i class="fa-solid fa-memory"></i> RAM Terpasang</label>
                 <select id="ramSpec" required>
                   <option value="4 GB">4 GB</option>
                   <option value="8 GB" selected>8 GB</option>
@@ -106,7 +113,7 @@
                 </select>
               </div>
               <div class="field-group">
-                <label for="storageSpec">Kapasitas Storage</label>
+                <label for="storageSpec"><i class="fa-solid fa-hard-drive"></i> Kapasitas Storage</label>
                 <input type="text" id="storageSpec" placeholder="SSD 256GB / HDD 1TB" required>
               </div>
             </div>
@@ -115,8 +122,11 @@
           <!-- Kategori Checklist: Hardware Utama -->
           <div class="glass-card">
             <div class="card-header">
-              <i class="fa-solid fa-server accent-icon"></i>
-              <h3>Hardware Utama & Komponen CPU</h3>
+              <span class="icon-wrap"><i class="fa-solid fa-server accent-icon"></i></span>
+              <div>
+                <h3>Hardware Utama & Komponen CPU</h3>
+                <p class="card-subtitle">Pemeriksaan fisik internal dan komponen pemrosesan</p>
+              </div>
             </div>
             <div id="group-hardware" class="checklist-list"></div>
           </div>
@@ -124,8 +134,11 @@
           <!-- Kategori Checklist: Peripheral & Layar -->
           <div class="glass-card">
             <div class="card-header">
-              <i class="fa-solid fa-keyboard accent-icon"></i>
-              <h3>Layar Monitor & Periferal</h3>
+              <span class="icon-wrap"><i class="fa-solid fa-keyboard accent-icon"></i></span>
+              <div>
+                <h3>Layar Monitor & Periferal</h3>
+                <p class="card-subtitle">Pemeriksaan output visual, keyboard, dan mouse</p>
+              </div>
             </div>
             <div id="group-peripheral" class="checklist-list"></div>
           </div>
@@ -133,8 +146,11 @@
           <!-- Kategori Checklist: Jaringan & Software -->
           <div class="glass-card">
             <div class="card-header">
-              <i class="fa-solid fa-network-wired accent-icon"></i>
-              <h3>Jaringan & Sistem Operasi</h3>
+              <span class="icon-wrap"><i class="fa-solid fa-network-wired accent-icon"></i></span>
+              <div>
+                <h3>Jaringan & Sistem Operasi</h3>
+                <p class="card-subtitle">Pemeriksaan integritas OS, jaringan LAN, dan proteksi</p>
+              </div>
             </div>
             <div id="group-software" class="checklist-list"></div>
           </div>
@@ -142,29 +158,36 @@
           <!-- Upload Dokumentasi Foto Kondisi PC -->
           <div class="glass-card">
             <div class="card-header">
-              <i class="fa-solid fa-camera accent-icon"></i>
-              <h3>Dokumentasi Foto Fisik PC</h3>
+              <span class="icon-wrap"><i class="fa-solid fa-camera accent-icon"></i></span>
+              <div>
+                <h3>Dokumentasi Foto Fisik PC</h3>
+                <p class="card-subtitle">Lampirkan foto kondisi fisik unit untuk bukti pelaporan</p>
+              </div>
             </div>
             <div class="upload-zone" id="uploadDropArea">
               <input type="file" id="photoInput" accept="image/*" capture="environment">
               <div class="upload-placeholder" id="uploadPlaceholder">
-                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                <div class="upload-icon-circle">
+                  <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                </div>
                 <p>Klik untuk buka kamera atau pilih foto</p>
-                <span class="file-note">Maks. 2MB (Otomatis dikompres)</span>
+                <span class="file-note">JPG/PNG maks. 2MB (Dikompres otomatis)</span>
               </div>
               <div class="image-preview-wrapper hidden" id="previewWrapper">
                 <img id="imagePreview" alt="Foto Unit">
-                <button type="button" class="btn-remove-photo" id="btnRemovePhoto">
-                  <i class="fa-solid fa-trash"></i>
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto" title="Hapus Foto">
+                  <i class="fa-solid fa-trash-can"></i>
                 </button>
               </div>
             </div>
           </div>
 
-          <button type="submit" id="btnSaveAudit" class="btn-primary-action">
-            <i class="fa-solid fa-floppy-disk"></i>
-            <span>Simpan Data Audit</span>
-          </button>
+          <div class="form-action-container">
+            <button type="submit" id="btnSaveAudit" class="btn-primary-action">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>Simpan Data Audit</span>
+            </button>
+          </div>
         </form>
       </section>
 
@@ -173,16 +196,25 @@
         <!-- Dashboard Mini Metrik -->
         <div class="metric-row">
           <div class="metric-card">
-            <span class="metric-label">Total PC</span>
-            <span class="metric-val" id="metricTotal">0</span>
+            <div class="metric-icon-bg"><i class="fa-solid fa-computer"></i></div>
+            <div class="metric-data">
+              <span class="metric-label">Total PC</span>
+              <span class="metric-val" id="metricTotal">0</span>
+            </div>
           </div>
           <div class="metric-card safe">
-            <span class="metric-label">Normal</span>
-            <span class="metric-val" id="metricNormal">0</span>
+            <div class="metric-icon-bg"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="metric-data">
+              <span class="metric-label">Normal</span>
+              <span class="metric-val" id="metricNormal">0</span>
+            </div>
           </div>
           <div class="metric-card danger">
-            <span class="metric-label">Trouble</span>
-            <span class="metric-val" id="metricIssue">0</span>
+            <div class="metric-icon-bg"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="metric-data">
+              <span class="metric-label">Trouble</span>
+              <span class="metric-val" id="metricIssue">0</span>
+            </div>
           </div>
         </div>
 
@@ -214,15 +246,19 @@
 
       <!-- ================= TAB 3: CETAK LAPORAN ================= -->
       <section id="tab-cetak" class="tab-pane">
-        <div class="glass-card">
+        <div class="glass-card print-generator-card">
           <div class="card-header">
-            <i class="fa-solid fa-file-invoice accent-icon"></i>
-            <h3>Cetak Berita Acara Pemeriksaan</h3>
+            <span class="icon-wrap"><i class="fa-solid fa-file-invoice accent-icon"></i></span>
+            <div>
+              <h3>Cetak Berita Acara Pemeriksaan</h3>
+              <p class="card-subtitle">Format resmi untuk arsip fisik dan pengajuan perbaikan</p>
+            </div>
           </div>
-          <p class="desc-text">Cetak format Berita Acara Kondisi Komputer resmi untuk arsip laboratorium atau pengajuan perbaikan teknis.</p>
+          
+          <p class="desc-text">Pilih unit komputer yang sudah diaudit untuk menghasilkan lembar Berita Acara pemeriksaan kelayakan siap cetak atau ekspor PDF lengkap dengan tanda tangan teknisi & kepala lab.</p>
           
           <div class="field-group mt-3">
-            <label for="selectPcForPrint">Pilih Unit Komputer Terdata:</label>
+            <label for="selectPcForPrint"><i class="fa-solid fa-list-check"></i> Pilih Unit Komputer Terdata</label>
             <select id="selectPcForPrint"></select>
           </div>
 
@@ -239,8 +275,11 @@
     <div id="detailModal" class="modal-overlay hidden">
       <div class="modal-card">
         <div class="modal-top">
-          <h3 id="modalPcTitle">Detail Komputer</h3>
-          <button class="modal-close" id="btnCloseModal">&times;</button>
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-circle-info accent-icon"></i>
+            <h3 id="modalPcTitle">Detail Komputer</h3>
+          </div>
+          <button class="modal-close" id="btnCloseModal" aria-label="Tutup Detail">&times;</button>
         </div>
         <div class="modal-scroll-body" id="modalDetailBody"></div>
       </div>
