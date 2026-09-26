@@ -383,6 +383,18 @@ function showModalDetail(item) {
     </div>
   `).join("");
 
+  // Deteksi sumber foto (apakah base64 atau link drive)
+  const imageSource = item.foto_base64 || item.foto_drive_url;
+  let photoElement = "";
+  
+  if (imageSource) {
+    if (imageSource.startsWith("data:image")) {
+      photoElement = `<img src="${imageSource}" style="width:100%; border-radius:8px; border:1px solid var(--surface-border);">`;
+    } else {
+      photoElement = `<div style="margin-top:0.5rem;"><a href="${imageSource}" target="_blank" style="color:var(--accent-cyan); font-size:0.8rem; text-decoration:none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Foto di Google Drive</a></div>`;
+    }
+  }
+
   body.innerHTML = `
     <div style="font-size:0.8rem; line-height: 1.6; margin-bottom: 1rem;">
       <p><strong>Pemeriksa:</strong> ${item.inspector}</p>
@@ -391,10 +403,10 @@ function showModalDetail(item) {
     <div style="max-height:220px; overflow-y:auto;">
       ${checksHtml}
     </div>
-    ${item.foto_base64 ? `
+    ${photoElement ? `
       <div style="margin-top:1rem;">
         <p style="font-size:0.75rem; font-weight:600; margin-bottom:0.4rem;">Foto Dokumentasi Unit:</p>
-        <img src="${item.foto_base64}" style="width:100%; border-radius:8px; border:1px solid var(--surface-border);">
+        ${photoElement}
       </div>
     ` : ''}
   `;
