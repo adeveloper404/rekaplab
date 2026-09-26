@@ -277,10 +277,39 @@ function saveLocalRecord(data) {
   localStorage.setItem("labtrack_db", JSON.stringify(records));
 }
 
-function loadStoredRecords() {
+async function loadStoredRecords() {
+  const container = document.getElementById("pcListContainer");
+  
+  // 1. Tampilkan data dari localStorage dulu (agar tidak blank saat loading)
   inspectionRecords = JSON.parse(localStorage.getItem("labtrack_db") || "[]");
   renderRecordCards();
   updateMetrics();
+
+  // 2. Jika URL Google Script sudah diisi, tarik data cloud terbaru
+  if (!GAS_API_URL.includes("YOUR_SCRIPT_ID")) {
+    if (container && inspectionRecords.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--text-secondary);"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data dari Google Sheets...</div>`;
+    }
+
+    try {
+      const response = await fetch(GAS_API_URL);
+      const resData = await response.json();
+
+      if (resData.status === "success" && Array.isArray(resData.data)) {
+        // Balik urutan agar data terbaru berada di paling atas
+        inspectionRecords = resData.data.reverse();
+        
+        // Simpan cache ke memori lokal
+        localStorage.setItem("labtrack_db", JSON.stringify(inspectionRecords));
+        
+        // Render ulang tampilan dengan data live dari Google Sheets
+        renderRecordCards();
+        updateMetrics();
+      }
+    } catch (err) {
+      console.warn("Gagal mengambil data live dari Cloud, memakai data lokal:", err);
+    }
+  }
 }
 
 function updateMetrics() {
